@@ -1,0 +1,42 @@
+import tkinter
+from win10toast import ToastNotifier
+
+toast = ToastNotifier()
+
+
+def notify():
+    toast.show_toast("Notification", notify_entry.get(), icon_path=None, threaded=True,  duration=5)
+
+
+def set_notifier(time):
+    alarm_time = int(time) * 1000
+    root.after(alarm_time, notify)
+
+
+root = tkinter.Tk()
+root.geometry("350x350")
+root.resizable(0, 0)
+root.title("Notifier")
+
+title_frame = tkinter.Frame(root)
+title_frame.pack(padx=2, pady=2)
+options_frame = tkinter.Frame(root)
+options_frame.pack(padx=2, pady=2)
+
+title = tkinter.Label(title_frame, text="Notifier", font=("Rubrik", 25))
+title.pack()
+
+tkinter.Label(options_frame, text="How long until the notifier goes off? (seconds)", font=("Rubrik", 12)).pack(padx=2, pady=2)
+
+time_entry = tkinter.Entry(options_frame, font=("Rubrik", 12))
+time_entry.pack(padx=2, pady=2)
+
+tkinter.Label(options_frame, text="What will the message be?", font=("Rubrik", 12)).pack(padx=2, pady=2)
+
+notify_entry = tkinter.Entry(options_frame, font=("Rubrik", 12))
+notify_entry.pack(padx=2, pady=2)
+
+notify_button = tkinter.Button(options_frame, text="Set", font=("Rubrik", 15), width=15, command=lambda:set_notifier(time_entry.get()))
+notify_button.pack(padx=2, pady=10)
+
+root.mainloop()
